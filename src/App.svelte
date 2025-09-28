@@ -326,16 +326,78 @@
     </div>
     <Config bind:isConfigOpen></Config>
 {:else if proxyManager.isProxyOpen}
-    <div>
-        <iframe
-            bind:this={iframe}
-            title="Proxy"
-            class="w-full h-screen bg-transparent"
-            src={proxyManager.iframeUrl}
-            onload={onIframeLoad}
-            allow={iframeAllow}
-            sandbox={iframeSandbox}
-        ></iframe>
+    <!-- Proxy Interface with Persistent Toolbar -->
+    <div class="min-h-screen bg-black text-white">
+        <!-- Persistent Top Navigation Bar -->
+        <nav class="flex items-center justify-between px-4 py-3 border-b border-gray-800 bg-black/95 backdrop-blur-sm sticky top-0 z-50">
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 bg-white rounded-full flex items-center justify-center">
+                    <div class="w-3 h-3 bg-black rounded-full"></div>
+                </div>
+                <div class="flex space-x-4 ml-4">
+                    <button class="text-white hover:text-gray-300 transition-colors text-sm">Home</button>
+                    <button onclick={openEmulator} class="text-white hover:text-gray-300 transition-colors text-sm">Emulator</button>
+                </div>
+            </div>
+            
+            <!-- Integrated Toolbar Controls -->
+            <div class="flex items-center space-x-3">
+                <!-- Navigation Controls -->
+                <div class="flex items-center space-x-2">
+                    <button
+                        class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                        title="Previous Page"
+                        onclick={() => setUrl(proxyHistory.goBackward())}
+                    ><ArrowLeft class="w-3 h-3" /></button>
+                    <button
+                        class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                        title="Next Page"
+                        onclick={() => setUrl(proxyHistory.goForward())}
+                    ><ArrowRight class="w-3 h-3" /></button>
+                    <button
+                        class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                        title="Refresh Page"
+                        onclick={() => iframe?.contentWindow?.location?.reload()}
+                    ><RotateCw class="w-3 h-3" /></button>
+                </div>
+                
+                <!-- Mobile-Friendly Search Bar -->
+                <div class="flex items-center space-x-2">
+                    <input
+                        type="text"
+                        class="px-3 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all w-48 sm:w-64"
+                        placeholder="Search anything..."
+                        onkeydown={onEnterKeyPressed(startProxy)}
+                        bind:this={urlBar}
+                        bind:value={destinationInput}
+                    />
+                    <button
+                        onclick={startProxy}
+                        disabled={proxyManager.proxyUrl === "" || !proxyManager.serviceWorker}
+                        class="w-7 h-7 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors disabled:opacity-50"
+                        title="Start proxy"
+                    ><Search class="w-3 h-3" /></button>
+                </div>
+                
+                <!-- Settings -->
+                <button onclick={() => (isConfigOpen = true)} class="text-white hover:text-gray-300 transition-colors">
+                    <Settings2 class="w-4 h-4" />
+                </button>
+            </div>
+        </nav>
+
+        <!-- Proxy Iframe -->
+        <div class="h-[calc(100vh-60px)]">
+            <iframe
+                bind:this={iframe}
+                title="Proxy"
+                class="w-full h-full bg-transparent"
+                src={proxyManager.iframeUrl}
+                onload={onIframeLoad}
+                allow={iframeAllow}
+                sandbox={iframeSandbox}
+            ></iframe>
+        </div>
     </div>
     <Config bind:isConfigOpen></Config>
 
@@ -385,91 +447,91 @@
         </nav>
 
         <!-- Main Content -->
-        <div class="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6">
+        <div class="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-4 sm:px-6">
             <!-- Title -->
-            <h1 class="text-6xl font-bold mb-8 text-white">ethereal</h1>
+            <h1 class="text-4xl sm:text-6xl font-bold mb-6 sm:mb-8 text-white text-center">ethereal</h1>
             
-            <!-- Search Bar -->
-            <div class="relative w-full max-w-2xl mb-12">
+            <!-- Mobile-Friendly Search Bar -->
+            <div class="relative w-full max-w-2xl mb-8 sm:mb-12">
                 <input
                     type="text"
                     bind:value={destinationInput}
                     onkeydown={onEnterKeyPressed(startProxy)}
-                    class="w-full px-6 py-4 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    class="w-full px-4 sm:px-6 py-3 sm:py-4 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-base"
                     placeholder="Search anything..."
                 />
                 <button
                     onclick={startProxy}
                     disabled={proxyManager.proxyUrl === "" || !proxyManager.serviceWorker}
-                    class="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-white transition-colors"
+                    class="absolute right-2 sm:right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-white transition-colors"
                 >
-                    <Search class="w-5 h-5" />
+                    <Search class="w-4 h-4 sm:w-5 sm:h-5" />
                 </button>
             </div>
 
-            <!-- Quick Access Buttons -->
-            <div class="grid grid-cols-4 gap-4 mb-8 max-w-4xl">
+            <!-- Mobile-Friendly Quick Access Buttons -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 mb-6 sm:mb-8 max-w-4xl w-full">
                 <!-- Top Row -->
-                <button onclick={openAmazon} class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="w-6 h-6 bg-orange-500 rounded flex items-center justify-center">
+                <button onclick={openAmazon} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-orange-500 rounded flex items-center justify-center">
                         <span class="text-white font-bold text-xs">A</span>
                     </div>
-                    <span class="text-gray-900 font-medium">amazon</span>
+                    <span class="text-gray-900 font-medium text-sm sm:text-base">amazon</span>
                 </button>
                 
-                <button onclick={openChatGPT} class="flex items-center space-x-3 px-6 py-4 bg-teal-500 rounded-lg hover:bg-teal-600 transition-colors">
-                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                <button onclick={openChatGPT} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-teal-500 rounded-lg hover:bg-teal-600 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-teal-500 font-bold text-xs">C</span>
                     </div>
-                    <span class="text-white font-medium">ChatGPT</span>
+                    <span class="text-white font-medium text-sm sm:text-base">ChatGPT</span>
                 </button>
                 
-                <button onclick={openDiscord} class="flex items-center space-x-3 px-6 py-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
-                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                <button onclick={openDiscord} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-blue-600 font-bold text-xs">D</span>
                     </div>
-                    <span class="text-white font-medium">Discord</span>
+                    <span class="text-white font-medium text-sm sm:text-base">Discord</span>
                 </button>
                 
-                <button onclick={openGitHub} class="flex items-center space-x-3 px-6 py-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
-                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                <button onclick={openGitHub} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-gray-800 font-bold text-xs">G</span>
                     </div>
-                    <span class="text-white font-medium">GitHub</span>
+                    <span class="text-white font-medium text-sm sm:text-base">GitHub</span>
                 </button>
 
                 <!-- Bottom Row -->
-                <button onclick={openGoogle} class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
-                    <div class="w-6 h-6 bg-gradient-to-r from-blue-500 via-red-500 to-yellow-500 rounded flex items-center justify-center">
+                <button onclick={openGoogle} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-gradient-to-r from-blue-500 via-red-500 to-yellow-500 rounded flex items-center justify-center">
                         <span class="text-white font-bold text-xs">G</span>
                     </div>
-                    <span class="text-gray-900 font-medium">Google</span>
+                    <span class="text-gray-900 font-medium text-sm sm:text-base">Google</span>
                 </button>
                 
-                <button onclick={openPinterest} class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
-                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                <button onclick={openPinterest} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-red-600 font-bold text-xs">P</span>
                     </div>
-                    <span class="text-white font-medium">Pinterest</span>
+                    <span class="text-white font-medium text-sm sm:text-base">Pinterest</span>
                 </button>
                 
-                <button onclick={openTwitch} class="flex items-center space-x-3 px-6 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors">
-                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                <button onclick={openTwitch} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-purple-600 font-bold text-xs">T</span>
                     </div>
-                    <span class="text-white font-medium">twitch</span>
+                    <span class="text-white font-medium text-sm sm:text-base">twitch</span>
                 </button>
                 
-                <button onclick={openYouTube} class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
-                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                <button onclick={openYouTube} class="flex items-center space-x-2 sm:space-x-3 px-3 sm:px-6 py-3 sm:py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                    <div class="w-5 h-5 sm:w-6 sm:h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-red-600 font-bold text-xs">Y</span>
                     </div>
-                    <span class="text-white font-medium">YouTube</span>
+                    <span class="text-white font-medium text-sm sm:text-base">YouTube</span>
                 </button>
             </div>
 
-            <!-- Status Information -->
-            <div class="flex items-center space-x-6 text-white">
+            <!-- Mobile-Friendly Status Information -->
+            <div class="flex flex-col sm:flex-row items-center space-y-2 sm:space-y-0 sm:space-x-6 text-white text-sm sm:text-base">
                 <div class="flex items-center space-x-2">
                     <Sun class="w-4 h-4 text-yellow-400" />
                     <span>Good morning, User!</span>
