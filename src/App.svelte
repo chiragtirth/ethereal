@@ -198,6 +198,6 @@
     </div>
     <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-4/5 items-center text-center">
         <h1 class="text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-300">ethereal</h1>
-        <p>a sleek proxy with speed, design, and usability in mind.</p>
+        <p>---a sleek proxy with speed, design, and usability in mind.---</p>
     </div>
 {/if}
