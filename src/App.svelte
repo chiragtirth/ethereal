@@ -239,33 +239,22 @@
     </div>
 {:else if isEmulatorOpen}
     <!-- Emulator Interface -->
-    <div class="w-full h-screen flex flex-col">
-        <div class="flex-1">
-            <iframe
-                title="Retro Game Emulator"
-                class="w-full h-full border-0"
-                src="https://demo.emulatorjs.org/"
-                allow="gamepad; microphone; camera"
-                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-downloads"
-            ></iframe>
-        </div>
+    <div class="w-full h-screen relative">
+        <!-- Back Button - Positioned to not interfere with emulator controls -->
+        <button
+            class="absolute top-4 left-4 z-50 btn-circle bg-blue-500/80 backdrop-blur-sm p-3 text-sm cursor-pointer pointer-events-auto hover:brightness-75 transition-all shadow-lg"
+            title="Back to Proxy"
+            onclick={() => (isEmulatorOpen = false)}
+        ><ArrowLeft class="scale-95" /></button>
         
-        <!-- Emulator Toolbar -->
-        <div class="flex grow-1 bottom-0 fixed w-full bg-transparent h-[9%] items-center justify-center">
-            <button
-                class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-                title="Back to Proxy"
-                onclick={() => (isEmulatorOpen = false)}
-            ><ArrowLeft class="scale-95" /></button>
-            <div class="flex-1 text-center">
-                <h2 class="text-white font-semibold">Retro Game Emulator - I DO NOT CONDONE PIRACY OR ANY ILLEGAL ACTS</h2>
-            </div>
-            <button
-                class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-                title="Open Settings"
-                onclick={() => (isConfigOpen = true)}
-            ><Settings2 class="scale-95" /></button>
-        </div>
+        <!-- Full Screen Emulator -->
+        <iframe
+            title="Retro Game Emulator"
+            class="w-full h-full border-0"
+            src="https://demo.emulatorjs.org/"
+            allow="gamepad; microphone; camera"
+            sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-downloads"
+        ></iframe>
     </div>
     <Config bind:isConfigOpen></Config>
 {:else if proxyManager.isProxyOpen}
