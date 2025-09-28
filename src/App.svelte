@@ -115,7 +115,7 @@
                     <p class="text-sm leading-relaxed">
                         This proxy service is provided for educational and research purposes only. 
                         Users are responsible for complying with all applicable laws and regulations 
-                        in their jurisdiction. If you are a school admin and want this taken down contact me at --->ethereal.proxy1@gmail.com<---
+                        in their jurisdiction. If you are a school admin and want this taken down contact us at ethereal.proxy1@gmail.com.
                     </p>
                 </div>
 
