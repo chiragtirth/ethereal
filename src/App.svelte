@@ -258,7 +258,7 @@
                 onclick={() => (isEmulatorOpen = false)}
             ><ArrowLeft class="scale-95" /></button>
             <div class="flex-1 text-center">
-                <h2 class="text-white font-semibold">Retro Game Emulator - Drag ROM files to play!</h2>
+                <h2 class="text-white font-semibold">Retro Game Emulator - I DO NOT CONDONE PIRACY OR ANY ILLEGAL ACTS</h2>
             </div>
             <button
                 class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
