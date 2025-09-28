@@ -115,7 +115,7 @@
                     <p class="text-sm leading-relaxed">
                         This proxy service is provided for educational and research purposes only. 
                         Users are responsible for complying with all applicable laws and regulations 
-                        in their jurisdiction.
+                        in their jurisdiction. If you are a school admin and want this taken down contact me at --->ethereal.proxy1@gmail.com<---
                     </p>
                 </div>
 
@@ -131,7 +131,7 @@
                 <div class="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
                     <h2 class="text-xl font-semibold text-blue-300 mb-3">⚖️ Terms of Use</h2>
                     <ul class="text-sm leading-relaxed space-y-2">
-                        <li>• Do not use for illegal activities</li>
+                        <li>• Do not use for illegal activities we will not be accountable</li>
                         <li>• Respect website terms of service</li>
                         <li>• No guarantee of service availability</li>
                         <li>• Use at your own risk</li>
