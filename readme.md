@@ -18,14 +18,6 @@ This project is **original work** and is **not open-source**.
 Sharing or using it without permission **violates the author’s rights**.
 
 ---
-
-## 📬 Contact
-For inquiries, collaborations, or permission requests, reach out to:
-
-**Tirth Patel**  
-📧 Email: `your-email@example.com`  
-🌐 Website: `https://yourwebsite.com`
-
 ---
 
 > ⚡ Reminder: Copying or forking without permission is **strictly forbidden**.
