@@ -70,6 +70,46 @@
         passwordInput = "";
     }
 
+    function openAmazon() {
+        destinationInput = 'https://amazon.com';
+        startProxy();
+    }
+
+    function openChatGPT() {
+        destinationInput = 'https://chat.openai.com';
+        startProxy();
+    }
+
+    function openDiscord() {
+        destinationInput = 'https://discord.com';
+        startProxy();
+    }
+
+    function openGitHub() {
+        destinationInput = 'https://github.com';
+        startProxy();
+    }
+
+    function openGoogle() {
+        destinationInput = 'https://google.com';
+        startProxy();
+    }
+
+    function openPinterest() {
+        destinationInput = 'https://pinterest.com';
+        startProxy();
+    }
+
+    function openTwitch() {
+        destinationInput = 'https://twitch.tv';
+        startProxy();
+    }
+
+    function openYouTube() {
+        destinationInput = 'https://youtube.com';
+        startProxy();
+    }
+
     function startProxy() {
         if (proxyManager.startProxy(destinationInput)) {
             destinationInput = "";
@@ -425,28 +465,28 @@
             <!-- Quick Access Buttons -->
             <div class="grid grid-cols-4 gap-4 mb-8 max-w-4xl">
                 <!-- Top Row -->
-                <button onclick={() => { destinationInput = 'https://amazon.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
+                <button onclick={openAmazon} class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-6 h-6 bg-orange-500 rounded flex items-center justify-center">
                         <span class="text-white font-bold text-xs">A</span>
                     </div>
                     <span class="text-gray-900 font-medium">amazon</span>
                 </button>
                 
-                <button onclick={() => { destinationInput = 'https://chat.openai.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-teal-500 rounded-lg hover:bg-teal-600 transition-colors">
+                <button onclick={openChatGPT} class="flex items-center space-x-3 px-6 py-4 bg-teal-500 rounded-lg hover:bg-teal-600 transition-colors">
                     <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-teal-500 font-bold text-xs">C</span>
                     </div>
                     <span class="text-white font-medium">ChatGPT</span>
                 </button>
                 
-                <button onclick={() => { destinationInput = 'https://discord.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                <button onclick={openDiscord} class="flex items-center space-x-3 px-6 py-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
                     <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-blue-600 font-bold text-xs">D</span>
                     </div>
                     <span class="text-white font-medium">Discord</span>
                 </button>
                 
-                <button onclick={() => { destinationInput = 'https://github.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                <button onclick={openGitHub} class="flex items-center space-x-3 px-6 py-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
                     <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-gray-800 font-bold text-xs">G</span>
                     </div>
@@ -454,28 +494,28 @@
                 </button>
 
                 <!-- Bottom Row -->
-                <button onclick={() => { destinationInput = 'https://google.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
+                <button onclick={openGoogle} class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
                     <div class="w-6 h-6 bg-gradient-to-r from-blue-500 via-red-500 to-yellow-500 rounded flex items-center justify-center">
                         <span class="text-white font-bold text-xs">G</span>
                     </div>
                     <span class="text-gray-900 font-medium">Google</span>
                 </button>
                 
-                <button onclick={() => { destinationInput = 'https://pinterest.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                <button onclick={openPinterest} class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
                     <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-red-600 font-bold text-xs">P</span>
                     </div>
                     <span class="text-white font-medium">Pinterest</span>
                 </button>
                 
-                <button onclick={() => { destinationInput = 'https://twitch.tv'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors">
+                <button onclick={openTwitch} class="flex items-center space-x-3 px-6 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors">
                     <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-purple-600 font-bold text-xs">T</span>
                     </div>
                     <span class="text-white font-medium">twitch</span>
                 </button>
                 
-                <button onclick={() => { destinationInput = 'https://youtube.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                <button onclick={openYouTube} class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
                     <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
                         <span class="text-red-600 font-bold text-xs">Y</span>
                     </div>
