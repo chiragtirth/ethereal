@@ -307,7 +307,7 @@
         <iframe
             bind:this={iframe}
             title="Proxy"
-            class="w-full h-[91vh] bg-transparent rounded-b-2xl shadow-lg shadow-black/20"
+            class="w-full h-screen bg-transparent"
             src={proxyManager.iframeUrl}
             onload={onIframeLoad}
             allow={iframeAllow}
@@ -316,151 +316,75 @@
     </div>
     <Config bind:isConfigOpen></Config>
 
-    <div
-        class="flex grow-1 bottom-0 fixed w-full bg-transparent h-[9%] items-center justify-center"
-    >
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-0 mr-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Previous Page"
-            onclick={() => setUrl(proxyHistory.goBackward())}
-        ><ArrowLeft class="scale-95 transition-all" /></button> 
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-0 mr-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Next Page"
-            onclick={() => setUrl(proxyHistory.goForward())}
-        ><ArrowRight class="scale-95 transition-all" /></button>    
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-0 mr-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Refresh Page"
-            onclick={() => iframe.contentWindow.location.reload()}
-        ><RotateCw class="scale-95 transition-all" /></button>
-        <input
-            type="text"
-            class="input max-w-2/3 h-8 min-w-2/3 rounded-full focus:shadow-none focus:border-none focus:brightness-125 transition-all p-5 focus:outline-none outline-none border-none shadow-none"
-            title="Destination URL"
-            id="searchbar"
-            placeholder="loading, please wait. this may take some time."
-            bind:value={destinationInput}
-            bind:this={searchbar}
-            onkeydown={onEnterKeyPressed(startProxy)}
-        />
-        <span
-            class="loading loading-spinner scale-75 loading-xl ml-[-3.5%] mb-[0%] mr-1.5 z-1000 transition-all" style="display: none;" bind:this={loader}>
-        </span>
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Start proxy"
-            onclick={startProxy}
-            disabled={proxyManager.proxyUrl === "" ||
-                !proxyManager.serviceWorker}><Search class="scale-95" /></button>
-        <button
-            class="btn-circle bg-purple-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Open Emulator"
-            onclick={openEmulator}
-        ><Gamepad2 class="scale-95" /></button>
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Open Settings"
-            onclick={() => (isConfigOpen = true)}
-        ><Settings2 class="scale-95" /></button>
-        <button
-            class="btn-circle bg-red-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="End Proxy"
-            onclick={() => (proxyManager.isProxyOpen = false)}><X class="scale-95" /></button>
-    </div>
 {:else}
     <Config bind:isConfigOpen></Config>
-
-    <div
-        class="flex grow-1 bottom-0 fixed w-full bg-transparent h-[9%] items-center justify-center"
-    >
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-0 mr-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Previous Page"
-            onclick={() => setUrl(proxyHistory.goBackward())}
-        ><ArrowLeft class="scale-95 transition-all" /></button> 
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-0 mr-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Next Page"
-            onclick={() => setUrl(proxyHistory.goForward())}
-        ><ArrowRight class="scale-95 transition-all" /></button>    
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-0 mr-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Refresh Page"
-            onclick={() => iframe.contentWindow.location.reload()}
-        ><RotateCw class="scale-95 transition-all" /></button>
-        <input
-            type="text"
-            class="input max-w-2/3 h-8 min-w-2/3 rounded-full p-5 focus:outline-none focus:shadow-none focus:border-none focus:brightness-125 transition-all outline-none shadow-none border-none"
-            title="Destination URL"
-            placeholder="search anything..."
-            onkeydown={onEnterKeyPressed(startProxy)}
-            bind:this={urlBar}
-            bind:value={destinationInput}
-        />
-        <span
-            class="loading loading-spinner scale-75 loading-xl ml-[-3.5%] mb-[0%] mr-1.5 z-1000 transition-all" style="display: none;" bind:this={loader}>
-        </span>
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Start proxy"
-            onclick={startProxy}
-            disabled={proxyManager.proxyUrl === "" ||
-                !proxyManager.serviceWorker}><Search class="scale-95" /></button>
-        <button
-            class="btn-circle bg-purple-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Open Emulator"
-            onclick={openEmulator}
-        ><Gamepad2 class="scale-95" /></button>
-        <button
-            class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
-            title="Open Settings"
-            onclick={() => (isConfigOpen = true)}
-        ><Settings2 class="scale-95" /></button>
-    </div>
     
     <!-- New Ambient-Style Homepage -->
-    <div class="min-h-screen bg-gray-900 text-white">
-        <!-- Top Navigation Bar -->
+    <div class="min-h-screen bg-black text-white">
+        <!-- Top Navigation Bar with Integrated Controls -->
         <nav class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
             <div class="flex items-center space-x-2">
                 <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
-                    <div class="w-4 h-4 bg-gray-900 rounded-full"></div>
+                    <div class="w-4 h-4 bg-black rounded-full"></div>
                 </div>
                 <div class="flex space-x-6 ml-6">
-                    <a href="#" class="text-white hover:text-gray-300 transition-colors">Home</a>
-                    <a href="#" class="text-white hover:text-gray-300 transition-colors">Games</a>
-                    <a href="#" class="text-white hover:text-gray-300 transition-colors">Apps</a>
+                    <button class="text-white hover:text-gray-300 transition-colors">Home</button>
+                    <button class="text-white hover:text-gray-300 transition-colors">Games</button>
+                    <button class="text-white hover:text-gray-300 transition-colors">Apps</button>
                     <button onclick={openEmulator} class="text-white hover:text-gray-300 transition-colors">Emulator</button>
                 </div>
             </div>
-            <button onclick={() => (isConfigOpen = true)} class="text-white hover:text-gray-300 transition-colors">
-                <Settings2 class="w-5 h-5" />
-            </button>
+            
+            <!-- Integrated Toolbar Controls -->
+            <div class="flex items-center space-x-4">
+                <!-- Navigation Controls -->
+                <div class="flex items-center space-x-2">
+                    <button
+                        class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                        title="Previous Page"
+                        onclick={() => setUrl(proxyHistory.goBackward())}
+                    ><ArrowLeft class="w-4 h-4" /></button>
+                    <button
+                        class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                        title="Next Page"
+                        onclick={() => setUrl(proxyHistory.goForward())}
+                    ><ArrowRight class="w-4 h-4" /></button>
+                    <button
+                        class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors"
+                        title="Refresh Page"
+                        onclick={() => iframe?.contentWindow?.location?.reload()}
+                    ><RotateCw class="w-4 h-4" /></button>
+                </div>
+                
+                <!-- Search Bar -->
+                <div class="flex items-center space-x-2">
+                    <input
+                        type="text"
+                        class="px-4 py-2 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all w-64"
+                        placeholder="Search anything..."
+                        onkeydown={onEnterKeyPressed(startProxy)}
+                        bind:this={urlBar}
+                        bind:value={destinationInput}
+                    />
+                    <button
+                        onclick={startProxy}
+                        disabled={proxyManager.proxyUrl === "" || !proxyManager.serviceWorker}
+                        class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center hover:bg-blue-600 transition-colors disabled:opacity-50"
+                        title="Start proxy"
+                    ><Search class="w-4 h-4" /></button>
+                </div>
+                
+                <!-- Settings -->
+                <button onclick={() => (isConfigOpen = true)} class="text-white hover:text-gray-300 transition-colors">
+                    <Settings2 class="w-5 h-5" />
+                </button>
+            </div>
         </nav>
 
         <!-- Main Content -->
         <div class="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6">
             <!-- Title -->
             <h1 class="text-6xl font-bold mb-8 text-white">ethereal</h1>
-            
-            <!-- Search Bar -->
-            <div class="relative w-full max-w-2xl mb-12">
-                <input
-                    type="text"
-                    bind:value={destinationInput}
-                    onkeydown={onEnterKeyPressed(startProxy)}
-                    class="w-full px-6 py-4 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                    placeholder="Search anything..."
-                />
-                <button
-                    onclick={startProxy}
-                    disabled={proxyManager.proxyUrl === "" || !proxyManager.serviceWorker}
-                    class="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-white transition-colors"
-                >
-                    <Search class="w-5 h-5" />
-                </button>
-            </div>
 
             <!-- Quick Access Buttons -->
             <div class="grid grid-cols-4 gap-4 mb-8 max-w-4xl">
@@ -524,13 +448,13 @@
             </div>
 
             <!-- Status Information -->
-            <div class="flex items-center space-x-6 text-gray-400">
+            <div class="flex items-center space-x-6 text-white">
                 <div class="flex items-center space-x-2">
-                    <Sun class="w-4 h-4" />
+                    <Sun class="w-4 h-4 text-yellow-400" />
                     <span>Good morning, User!</span>
                 </div>
                 <div class="flex items-center space-x-2">
-                    <Wifi class="w-4 h-4" />
+                    <div class="w-2 h-2 bg-yellow-400 rounded-full"></div>
                     <span>Ping: 148 ms</span>
                 </div>
             </div>
