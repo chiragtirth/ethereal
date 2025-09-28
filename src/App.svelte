@@ -13,7 +13,8 @@
         RotateCw,
         ArrowRight,
         ArrowLeft,
-        X
+        X,
+        Gamepad2
     } from "@lucide/svelte";
 
     $effect(() => {
@@ -34,6 +35,7 @@
 
     let isConfigOpen = $state(false);
     let disclaimerAccepted = $state(false);
+    let isEmulatorOpen = $state(false);
 
     function acceptDisclaimer() {
         disclaimerAccepted = true;
@@ -115,7 +117,8 @@
                     <p class="text-sm leading-relaxed">
                         This proxy service is provided for educational and research purposes only. 
                         Users are responsible for complying with all applicable laws and regulations 
-                        in their jurisdiction. If you are a school admin and want this taken down contact us at ethereal.proxy1@gmail.com.
+                        in their jurisdiction. If you are a school administrator and want this taken down, 
+                        contact us at ethereal.proxy1@gmail.com
                     </p>
                 </div>
 
@@ -131,7 +134,7 @@
                 <div class="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
                     <h2 class="text-xl font-semibold text-blue-300 mb-3">⚖️ Terms of Use</h2>
                     <ul class="text-sm leading-relaxed space-y-2">
-                        <li>• Do not use for illegal activities we will not be accountable</li>
+                        <li>• Do not use for illegal activities</li>
                         <li>• Respect website terms of service</li>
                         <li>• No guarantee of service availability</li>
                         <li>• Use at your own risk</li>
@@ -163,6 +166,37 @@
             </div>
         </div>
     </div>
+{:else if isEmulatorOpen}
+    <!-- Emulator Interface -->
+    <div class="w-full h-screen flex flex-col">
+        <div class="flex-1">
+            <iframe
+                title="Retro Game Emulator"
+                class="w-full h-full border-0"
+                src="https://demo.emulatorjs.org/"
+                allow="gamepad; microphone; camera"
+                sandbox="allow-same-origin allow-scripts allow-forms allow-popups allow-pointer-lock allow-downloads"
+            ></iframe>
+        </div>
+        
+        <!-- Emulator Toolbar -->
+        <div class="flex grow-1 bottom-0 fixed w-full bg-transparent h-[9%] items-center justify-center">
+            <button
+                class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
+                title="Back to Proxy"
+                onclick={() => (isEmulatorOpen = false)}
+            ><ArrowLeft class="scale-95" /></button>
+            <div class="flex-1 text-center">
+                <h2 class="text-white font-semibold">Retro Game Emulator - Drag ROM files to play!</h2>
+            </div>
+            <button
+                class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
+                title="Open Settings"
+                onclick={() => (isConfigOpen = true)}
+            ><Settings2 class="scale-95" /></button>
+        </div>
+    </div>
+    <Config bind:isConfigOpen></Config>
 {:else if proxyManager.isProxyOpen}
     <div>
         <iframe
@@ -215,6 +249,11 @@
             disabled={proxyManager.proxyUrl === "" ||
                 !proxyManager.serviceWorker}><Search class="scale-95" /></button>
         <button
+            class="btn-circle bg-purple-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
+            title="Open Emulator"
+            onclick={() => (isEmulatorOpen = true)}
+        ><Gamepad2 class="scale-95" /></button>
+        <button
             class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
             title="Open Settings"
             onclick={() => (isConfigOpen = true)}
@@ -263,6 +302,11 @@
             onclick={startProxy}
             disabled={proxyManager.proxyUrl === "" ||
                 !proxyManager.serviceWorker}><Search class="scale-95" /></button>
+        <button
+            class="btn-circle bg-purple-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
+            title="Open Emulator"
+            onclick={() => (isEmulatorOpen = true)}
+        ><Gamepad2 class="scale-95" /></button>
         <button
             class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
             title="Open Settings"
