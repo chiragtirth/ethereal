@@ -36,9 +36,33 @@
     let isConfigOpen = $state(false);
     let disclaimerAccepted = $state(false);
     let isEmulatorOpen = $state(false);
+    let showPasswordScreen = $state(false);
+    let passwordInput = $state("");
+    let passwordCorrect = $state(false);
 
     function acceptDisclaimer() {
         disclaimerAccepted = true;
+    }
+
+    function openEmulator() {
+        showPasswordScreen = true;
+    }
+
+    function checkPassword() {
+        if (passwordInput === "2612") {
+            passwordCorrect = true;
+            showPasswordScreen = false;
+            isEmulatorOpen = true;
+            passwordInput = "";
+        } else {
+            passwordInput = "";
+            // You could add a visual feedback here for wrong password
+        }
+    }
+
+    function cancelPassword() {
+        showPasswordScreen = false;
+        passwordInput = "";
     }
 
     function startProxy() {
@@ -166,6 +190,53 @@
             </div>
         </div>
     </div>
+{:else if showPasswordScreen}
+    <!-- Password Screen -->
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center p-4">
+        <div class="max-w-md w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
+            <div class="text-center mb-8">
+                <div class="w-16 h-16 bg-purple-500/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <Gamepad2 class="w-8 h-8 text-purple-300" />
+                </div>
+                <h1 class="text-3xl font-bold text-white mb-2">🔒 Emulator Access</h1>
+                <p class="text-gray-300 text-sm">Enter password to access the emulator</p>
+                <div class="w-16 h-1 bg-gradient-to-r from-purple-400 to-blue-400 mx-auto rounded-full mt-4"></div>
+            </div>
+            
+            <div class="space-y-6">
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            bind:value={passwordInput}
+                            onkeydown={(e) => e.key === 'Enter' && checkPassword()}
+                            class="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                            placeholder="Enter password..."
+                            autofocus
+                        />
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <button 
+                        onclick={checkPassword}
+                        class="flex-1 px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    >
+                        Access Emulator
+                    </button>
+                    <button 
+                        onclick={cancelPassword}
+                        class="flex-1 px-6 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-all duration-300 shadow-lg"
+                    >
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 {:else if isEmulatorOpen}
     <!-- Emulator Interface -->
     <div class="w-full h-screen flex flex-col">
@@ -251,7 +322,7 @@
         <button
             class="btn-circle bg-purple-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
             title="Open Emulator"
-            onclick={() => (isEmulatorOpen = true)}
+            onclick={openEmulator}
         ><Gamepad2 class="scale-95" /></button>
         <button
             class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
@@ -305,7 +376,7 @@
         <button
             class="btn-circle bg-purple-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
             title="Open Emulator"
-            onclick={() => (isEmulatorOpen = true)}
+            onclick={openEmulator}
         ><Gamepad2 class="scale-95" /></button>
         <button
             class="btn-circle bg-blue-500 p-2 text-sm m-0 ml-2 cursor-pointer pointer-events-auto hover:brightness-75 transition-all"
