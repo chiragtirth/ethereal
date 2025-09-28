@@ -33,6 +33,11 @@
     let destinationInput = $state("");
 
     let isConfigOpen = $state(false);
+    let disclaimerAccepted = $state(false);
+
+    function acceptDisclaimer() {
+        disclaimerAccepted = true;
+    }
 
     function startProxy() {
         if (proxyManager.startProxy(destinationInput)) {
@@ -47,6 +52,7 @@
     let iframe: HTMLIFrameElement = $state();
 
     let searchbar: HTMLInputElement = $state()
+    let loader: HTMLSpanElement = $state()
 
     const iframeAllow =
         "accelerometer ambient-light-sensor attribution-reporting autoplay bluetooth browsing-topics camera compute-pressure " +
@@ -81,6 +87,12 @@
         proxyHistory.addToHistory(proxyManager.url);
     });
 
+    $effect(() => {
+        if (urlBar && !proxyManager.isProxyOpen) {
+            urlBar.focus();
+        }
+    });
+
     function setUrl(url: string | null) {
         if (url == null) return;
         proxyManager.url = url;
@@ -88,7 +100,70 @@
     }
 </script>
 
-{#if proxyManager.isProxyOpen}
+{#if !disclaimerAccepted}
+    <!-- Disclaimer Page -->
+    <div class="min-h-screen bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center p-4">
+        <div class="max-w-2xl w-full bg-white/10 backdrop-blur-lg rounded-2xl shadow-2xl p-8 border border-white/20">
+            <div class="text-center mb-8">
+                <h1 class="text-4xl font-bold text-white mb-4">⚠️ Important Disclaimer</h1>
+                <div class="w-16 h-1 bg-gradient-to-r from-blue-400 to-purple-400 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="space-y-6 text-gray-200">
+                <div class="bg-yellow-500/20 border border-yellow-500/30 rounded-lg p-4">
+                    <h2 class="text-xl font-semibold text-yellow-300 mb-3">🚨 Legal Notice</h2>
+                    <p class="text-sm leading-relaxed">
+                        This proxy service is provided for educational and research purposes only. 
+                        Users are responsible for complying with all applicable laws and regulations 
+                        in their jurisdiction.
+                    </p>
+                </div>
+
+                <div class="bg-red-500/20 border border-red-500/30 rounded-lg p-4">
+                    <h2 class="text-xl font-semibold text-red-300 mb-3">🔒 Privacy & Security</h2>
+                    <p class="text-sm leading-relaxed">
+                        This service may log your activity for security purposes. 
+                        Do not use this service for sensitive or confidential information. 
+                        We are not responsible for any data breaches or security incidents.
+                    </p>
+                </div>
+
+                <div class="bg-blue-500/20 border border-blue-500/30 rounded-lg p-4">
+                    <h2 class="text-xl font-semibold text-blue-300 mb-3">⚖️ Terms of Use</h2>
+                    <ul class="text-sm leading-relaxed space-y-2">
+                        <li>• Do not use for illegal activities</li>
+                        <li>• Respect website terms of service</li>
+                        <li>• No guarantee of service availability</li>
+                        <li>• Use at your own risk</li>
+                    </ul>
+                </div>
+
+                <div class="bg-green-500/20 border border-green-500/30 rounded-lg p-4">
+                    <h2 class="text-xl font-semibold text-green-300 mb-3">✅ Responsible Usage</h2>
+                    <p class="text-sm leading-relaxed">
+                        By continuing, you acknowledge that you have read and understood 
+                        this disclaimer and agree to use this service responsibly.
+                    </p>
+                </div>
+            </div>
+
+            <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                <button 
+                    onclick={acceptDisclaimer}
+                    class="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white font-semibold rounded-lg hover:from-blue-600 hover:to-purple-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                >
+                    I Understand & Accept
+                </button>
+                <button 
+                    onclick={() => window.close()}
+                    class="px-8 py-3 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-all duration-300 shadow-lg"
+                >
+                    Exit
+                </button>
+            </div>
+        </div>
+    </div>
+{:else if proxyManager.isProxyOpen}
     <div>
         <iframe
             bind:this={iframe}
@@ -176,9 +251,7 @@
             title="Destination URL"
             placeholder="search anything..."
             onkeydown={onEnterKeyPressed(startProxy)}
-            {@attach (urlBar: HTMLInputElement) => {
-                urlBar.focus();
-            }}
+            bind:this={urlBar}
             bind:value={destinationInput}
         />
         <span
