@@ -101,7 +101,7 @@
         </p>
         <button 
             class="px-6 py-3 bg-blue-500 hover:bg-blue-600 rounded text-white text-lg"
-            on:click={acceptDisclaimer}>
+            onclick={acceptDisclaimer}>
             I Understand & Continue
         </button>
     </div>
