@@ -14,7 +14,12 @@
         ArrowRight,
         ArrowLeft,
         X,
-        Gamepad2
+        Gamepad2,
+        Home,
+        Globe,
+        Monitor,
+        Sun,
+        Wifi
     } from "@lucide/svelte";
 
     $effect(() => {
@@ -373,8 +378,127 @@
             onclick={() => (isConfigOpen = true)}
         ><Settings2 class="scale-95" /></button>
     </div>
-    <div class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-4/5 items-center text-center">
-        <h1 class="text-5xl font-bold mb-2 text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-purple-300">ethereal</h1>
-        <p>---a sleek proxy with speed, design, and usability in mind.---</p>
+    
+    <!-- New Ambient-Style Homepage -->
+    <div class="min-h-screen bg-gray-900 text-white">
+        <!-- Top Navigation Bar -->
+        <nav class="flex items-center justify-between px-6 py-4 border-b border-gray-800">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                    <div class="w-4 h-4 bg-gray-900 rounded-full"></div>
+                </div>
+                <div class="flex space-x-6 ml-6">
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors">Home</a>
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors">Games</a>
+                    <a href="#" class="text-white hover:text-gray-300 transition-colors">Apps</a>
+                    <button onclick={openEmulator} class="text-white hover:text-gray-300 transition-colors">Emulator</button>
+                </div>
+            </div>
+            <button onclick={() => (isConfigOpen = true)} class="text-white hover:text-gray-300 transition-colors">
+                <Settings2 class="w-5 h-5" />
+            </button>
+        </nav>
+
+        <!-- Main Content -->
+        <div class="flex flex-col items-center justify-center min-h-[calc(100vh-80px)] px-6">
+            <!-- Title -->
+            <h1 class="text-6xl font-bold mb-8 text-white">ethereal</h1>
+            
+            <!-- Search Bar -->
+            <div class="relative w-full max-w-2xl mb-12">
+                <input
+                    type="text"
+                    bind:value={destinationInput}
+                    onkeydown={onEnterKeyPressed(startProxy)}
+                    class="w-full px-6 py-4 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                    placeholder="Search anything..."
+                />
+                <button
+                    onclick={startProxy}
+                    disabled={proxyManager.proxyUrl === "" || !proxyManager.serviceWorker}
+                    class="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-white transition-colors"
+                >
+                    <Search class="w-5 h-5" />
+                </button>
+            </div>
+
+            <!-- Quick Access Buttons -->
+            <div class="grid grid-cols-4 gap-4 mb-8 max-w-4xl">
+                <!-- Top Row -->
+                <button onclick={() => { destinationInput = 'https://amazon.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-6 h-6 bg-orange-500 rounded flex items-center justify-center">
+                        <span class="text-white font-bold text-xs">A</span>
+                    </div>
+                    <span class="text-gray-900 font-medium">amazon</span>
+                </button>
+                
+                <button onclick={() => { destinationInput = 'https://chat.openai.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-teal-500 rounded-lg hover:bg-teal-600 transition-colors">
+                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                        <span class="text-teal-500 font-bold text-xs">C</span>
+                    </div>
+                    <span class="text-white font-medium">ChatGPT</span>
+                </button>
+                
+                <button onclick={() => { destinationInput = 'https://discord.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors">
+                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                        <span class="text-blue-600 font-bold text-xs">D</span>
+                    </div>
+                    <span class="text-white font-medium">Discord</span>
+                </button>
+                
+                <button onclick={() => { destinationInput = 'https://github.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-gray-800 rounded-lg hover:bg-gray-700 transition-colors">
+                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                        <span class="text-gray-800 font-bold text-xs">G</span>
+                    </div>
+                    <span class="text-white font-medium">GitHub</span>
+                </button>
+
+                <!-- Bottom Row -->
+                <button onclick={() => { destinationInput = 'https://google.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-white rounded-lg hover:bg-gray-100 transition-colors">
+                    <div class="w-6 h-6 bg-gradient-to-r from-blue-500 via-red-500 to-yellow-500 rounded flex items-center justify-center">
+                        <span class="text-white font-bold text-xs">G</span>
+                    </div>
+                    <span class="text-gray-900 font-medium">Google</span>
+                </button>
+                
+                <button onclick={() => { destinationInput = 'https://pinterest.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                        <span class="text-red-600 font-bold text-xs">P</span>
+                    </div>
+                    <span class="text-white font-medium">Pinterest</span>
+                </button>
+                
+                <button onclick={() => { destinationInput = 'https://twitch.tv'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-purple-600 rounded-lg hover:bg-purple-700 transition-colors">
+                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                        <span class="text-purple-600 font-bold text-xs">T</span>
+                    </div>
+                    <span class="text-white font-medium">twitch</span>
+                </button>
+                
+                <button onclick={() => { destinationInput = 'https://youtube.com'; startProxy(); }}" class="flex items-center space-x-3 px-6 py-4 bg-red-600 rounded-lg hover:bg-red-700 transition-colors">
+                    <div class="w-6 h-6 bg-white rounded flex items-center justify-center">
+                        <span class="text-red-600 font-bold text-xs">Y</span>
+                    </div>
+                    <span class="text-white font-medium">YouTube</span>
+                </button>
+            </div>
+
+            <!-- Status Information -->
+            <div class="flex items-center space-x-6 text-gray-400">
+                <div class="flex items-center space-x-2">
+                    <Sun class="w-4 h-4" />
+                    <span>Good morning, User!</span>
+                </div>
+                <div class="flex items-center space-x-2">
+                    <Wifi class="w-4 h-4" />
+                    <span>Ping: 148 ms</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="absolute bottom-4 left-1/2 transform -translate-x-1/2 text-center text-gray-500 text-sm">
+            GitHub • Discord
+        </div>
     </div>
 {/if}
